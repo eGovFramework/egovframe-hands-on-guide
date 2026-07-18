@@ -6,21 +6,24 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class JDBCExample {
 
 	public static void main(String[] args) {
 
 		try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				System.out.println("Driver Loaded");
+				log.debug("Driver Loaded");
 			} catch (ClassNotFoundException e) {
-				System.out.println("Can not find driver class");
+				throw new RuntimeException(e);
 			}
 			
 			Connection conn = null;
 			try {
 				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/com?useSSL=false", "com", "com01" );
-				System.out.println("connected");
+				log.debug("connected");
 			
 				try (PreparedStatement delete = conn.prepareStatement("delete from customer")) {
 					delete.executeUpdate();
@@ -46,14 +49,16 @@ public class JDBCExample {
 			ResultSet rset = select.executeQuery();
 			
 			while(rset.next()) {
-				System.out.println("id: " + rset.getInt(1));
-				System.out.println("name: " + rset.getString(2));
-				System.out.println("addr: " + rset.getString(3));
+				log.debug("id: {}", rset.getInt(1));
+				log.debug("name: {}", rset.getString(2));
+				log.debug("addr: {}", rset.getString(3));
 			}
 			} catch (SQLException e) {
-				System.out.println(e.getMessage());
+				throw new RuntimeException(e);
 			} finally {
-				if(conn != null) try {conn.close();} catch (SQLException e) {}
+				if(conn != null) try {conn.close();} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
 			}
 	}
 }
