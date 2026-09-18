@@ -46,6 +46,13 @@
   </repositories>
 
   <dependencies>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.34</version>
+      <scope>provided</scope>
+    </dependency>
+
     <!-- Start of eGovFrame Runtime Environment -->
     <dependency>
       <groupId>org.egovframe.rte</groupId>
