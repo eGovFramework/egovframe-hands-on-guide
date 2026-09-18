@@ -21,7 +21,7 @@ public class EmployeeDAO extends EgovAbstractMapper {
   }
 
   public List<CustomerVO> selectEmployeeList(CustomerVO vo) {
-    return selectList("employee.selectCustomerList", vo);
+    return selectList("employee.selectEmployeeList", vo);
   }
 
 }
